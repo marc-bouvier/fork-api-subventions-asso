@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   import axios from "axios";
   import UserService from "../../src/modules/user/user.service";
   import { user as userStore } from "../store/user.store";
 
   async function getUser() {
-    let user;
+    let user: any;
     try {
       user = (
         await axios.get("/auth/token", {

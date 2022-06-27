@@ -1,20 +1,25 @@
-require('dotenv/config');
+import 'dotenv/config';
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
-const { DefinePlugin } = require('webpack');
+import sveltePreprocess from "svelte-preprocess";
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
+import path from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+import webpack from "webpack";
+const { DefinePlugin } = webpack;
+
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
 
-module.exports =  {
+export default  {
 	entry: {
-		'build/bundle': ['./svelte/main.js']
+		'build/bundle': ['./svelte/main.ts']
 	},
 	resolve: {
-		alias: {
-			svelte: path.dirname(require.resolve('svelte/package.json'))
-		},
 		extensions: ['.mjs', '.js', '.svelte', '.ts'],
 		mainFields: ['svelte', 'module', 'main']
 	},
@@ -31,10 +36,16 @@ module.exports =  {
 					loader: 'svelte-loader',
 					options: {
 						compilerOptions: {
-							dev: !prod
+							dev: !prod,
 						},
 						emitCss: prod,
-						hotReload: !prod
+						hotReload: !prod,
+						preprocess: sveltePreprocess({
+							typescript: {
+								tsconfigDirectory: __dirname,
+								tsconfigFile: "tsconfig.json"
+							}
+						})
 					}
 				}
 			},

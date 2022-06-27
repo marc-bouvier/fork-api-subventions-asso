@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Tab from "./Tab.svelte";
 
   export let titles;

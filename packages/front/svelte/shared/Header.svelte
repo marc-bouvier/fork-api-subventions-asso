@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { version } from "../../package.json";
   import { user as userStore } from "../store/user.store";
   import { getContext } from "svelte";

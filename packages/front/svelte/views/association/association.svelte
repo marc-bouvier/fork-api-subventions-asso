@@ -1,5 +1,5 @@
-<script>
-  import associationService from "./association.service.js";
+<script lang="ts">
+  import associationService from "./association.service";
   import Breadcrumb from "../../dsfr/Breadcrumb.svelte";
   import InfosLegales from "./components/InfosLegales.svelte";
   import TabsAsso from "./components/TabsAsso.svelte";

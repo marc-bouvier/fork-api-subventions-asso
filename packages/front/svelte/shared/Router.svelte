@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Association from "../views/association/Association.svelte";
   export let route;
 </script>

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import "./global.css";
   import { ENV } from "../src/shared/config";
   import Auth from "./shared/Auth.svelte";

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { valueOrHyphen } from "../helpers/dataHelper";
   export let label;
   export let data;

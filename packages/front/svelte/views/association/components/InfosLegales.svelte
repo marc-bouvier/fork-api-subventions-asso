@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { getSiegeAddress } from "../association.helper";
   import TitleWithData from "../../../components/TitleWithData.svelte";
   import DateHelper from "../../../../src/shared/helpers/DateHelper";
