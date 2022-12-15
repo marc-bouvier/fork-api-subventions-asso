@@ -4,7 +4,8 @@
         "module": "commonjs",
         "types": ["reflect-metadata", "jest"],
         "paths": {
-            "~": ["./src"]
+            "~": ["./src"],
+            "@api-subventions-asso/*": ["../*/src"]
         },
         "rootDir": "./",
         "outDir": "./build",
@@ -16,10 +17,5 @@
         "resolveJsonModule": true,
         "noImplicitAny": false
     },
-    "exclude": [
-        "tests",
-        "jest.config.ts",
-        "jest.config.integ.ts",
-        "jest.setup.after.env.ts"
-    ]
+    "exclude": ["tests", "jest.config.ts", "jest.config.integ.ts", "jest.setup.after.env.ts"]
 }
