@@ -12,9 +12,9 @@ describe("UserMigration", () => {
         const usersFindMock = jest.spyOn(userService, "find");
         // @ts-expect-error toLowerCaseUsers is private method
         const toLowerCaseUsersMock: jest.SpyInstance<UserDto[]> = jest.spyOn(userMigration, "toLowerCaseUsers");
-        // @ts-expect-error toLowerCaseUsers is private method
         const groupUsersByEmailMock: jest.SpyInstance<DefaultObject<UserDto[]>> = jest.spyOn(
             userMigration,
+            // @ts-expect-error toLowerCaseUsers is private method
             "groupUsersByEmail"
         );
         // @ts-expect-error toLowerCaseUsers is private method
@@ -160,9 +160,9 @@ describe("UserMigration", () => {
     });
 
     describe("findUsersAction", () => {
-        // @ts-expect-error groupUsersByStatus is private methods
         const groupUsersByStatusMock: jest.SpyInstance<DefaultObject<UserDto[]>> = jest.spyOn(
             userMigration,
+            // @ts-expect-error groupUsersByStatus is private methods
             "groupUsersByStatus"
         );
         // @ts-expect-error findLastConnectedUser is private methods

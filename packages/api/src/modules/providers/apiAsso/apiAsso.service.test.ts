@@ -240,8 +240,9 @@ describe("ApiAssoService", () => {
 
             it("should be return null", async () => {
                 const expected = null;
-                //@ts-ignore
+                //@ts-expect-error: mock
                 jest.spyOn(apiAssoService, "findFullScopeAssociation").mockImplementationOnce(() =>
+                    //@ts-expect-error: mock
                     Promise.resolve(null)
                 );
 
@@ -276,8 +277,9 @@ describe("ApiAssoService", () => {
 
             it("should be return null", async () => {
                 const expected = null;
-                //@ts-ignore
+                //@ts-expect-error: mock
                 jest.spyOn(apiAssoService, "findFullScopeAssociation").mockImplementationOnce(() =>
+                    //@ts-expect-error: mock
                     Promise.resolve(null)
                 );
 
@@ -312,8 +314,9 @@ describe("ApiAssoService", () => {
 
             it("should be return null", async () => {
                 const expected = null;
-                //@ts-ignore
+                //@ts-expect-error: mock
                 jest.spyOn(apiAssoService, "findFullScopeAssociation").mockImplementationOnce(() =>
+                    //@ts-expect-error: mock
                     Promise.resolve(null)
                 );
 
@@ -356,8 +359,9 @@ describe("ApiAssoService", () => {
 
             it("should be return null", async () => {
                 const expected = null;
-                //@ts-ignore
+                //@ts-expect-error: mock
                 jest.spyOn(apiAssoService, "findFullScopeAssociation").mockImplementationOnce(() =>
+                    //@ts-expect-error: mock
                     Promise.resolve(null)
                 );
 
@@ -376,8 +380,9 @@ describe("ApiAssoService", () => {
 
             it("should be return null", async () => {
                 const expected = null;
-                //@ts-ignore
+                //@ts-expect-error: mock
                 jest.spyOn(apiAssoService, "findFullScopeAssociation").mockImplementationOnce(() =>
+                    //@ts-expect-error: mock
                     Promise.resolve(null)
                 );
 

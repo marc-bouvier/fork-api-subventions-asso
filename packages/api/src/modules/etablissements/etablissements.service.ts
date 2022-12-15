@@ -49,9 +49,10 @@ export class EtablissementsService {
             return acc;
         }, {} as DefaultObject<Etablissement[]>);
         const etablissements = Object.values(groupBySiret).map(
-            // @ts-expect-error: TODO: I don't know how to handle this without using "as unknown"
             etablissements =>
+                // @ts-expect-error: TODO: I don't know how to handle this without using "as unknown"
                 FormaterHelper.formatData(
+                    // @ts-expect-error
                     etablissements as DefaultObject<ProviderValues>[],
                     this.provider_score
                 ) as Etablissement
