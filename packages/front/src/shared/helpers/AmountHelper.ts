@@ -1,4 +1,4 @@
-import { ProviderValue } from "@api-subventions-asso/dto";
+import { ProviderValue } from "dto";
 import ProviderValueHelper from "./ProviderValueHelper";
 
 export default class AmountHelper {

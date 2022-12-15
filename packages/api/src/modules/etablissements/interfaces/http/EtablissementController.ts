@@ -5,10 +5,10 @@ import {
     GetSubventionsResponseDto,
     GetVersementsResponseDto,
     Siret
-} from "@api-subventions-asso/dto";
+} from "dto";
 import { Route, Get, Controller, Tags, Security, Response } from "tsoa";
 import etablissementService from "../../etablissements.service";
-import { ErrorResponse } from "@api-subventions-asso/dto/shared/ResponseStatus";
+import { ErrorResponse } from "dto/shared/ResponseStatus";
 import { NotFoundError } from "../../../../shared/errors/httpErrors/NotFoundError";
 import { StructureIdentifiersEnum } from "../../../../@enums/StructureIdentifiersEnum";
 import { BadRequestError } from "../../../../shared/errors/httpErrors/BadRequestError";

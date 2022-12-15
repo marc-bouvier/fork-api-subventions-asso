@@ -1,4 +1,4 @@
-import { Siren, Siret } from "@api-subventions-asso/dto";
+import { Siren, Siret } from "dto";
 import { ASSO_BRANCHE, BRANCHE_ACCEPTED } from "../../../shared/ChorusBrancheAccepted";
 import CacheData from "../../../shared/Cache";
 import { asyncFilter } from "../../../shared/helpers/ArrayHelper";
@@ -10,24 +10,30 @@ import dataGouvService from "../datagouv/datagouv.service";
 import ChorusAdapter from "./adapters/ChorusAdapter";
 import ChorusLineEntity from "./entities/ChorusLineEntity";
 import chorusLineRepository from "./repositories/chorus.line.repository";
-import { ProviderEnum } from '../../../@enums/ProviderEnum';
+import { ProviderEnum } from "../../../@enums/ProviderEnum";
 
 export interface RejectedRequest {
-    state: "rejected", result: { message: string, code: number, data: unknown }
+    state: "rejected";
+    result: { message: string; code: number; data: unknown };
 }
 
 export class ChorusService implements VersementsProvider {
     provider = {
         name: "Chorus",
         type: ProviderEnum.raw,
-        description: "Chorus est un système d'information porté par l'AIFE pour les services de l'Etat qui permet de gérer les paiements des crédits Etat, que ce soit des commandes publiques ou des subventions et d'assurer la gestion financière du budget de l'Etat."
-    }
+        description:
+            "Chorus est un système d'information porté par l'AIFE pour les services de l'Etat qui permet de gérer les paiements des crédits Etat, que ce soit des commandes publiques ou des subventions et d'assurer la gestion financière du budget de l'Etat."
+    };
 
     private sirenBelongAssoCache = new CacheData<boolean>(1000 * 60 * 60);
 
     public validateEntity(entity: ChorusLineEntity) {
         if (!BRANCHE_ACCEPTED[entity.indexedInformations.codeBranche]) {
-            return { success: false, message: `The branche ${entity.indexedInformations.codeBranche} is not accepted in data`, data: entity }
+            return {
+                success: false,
+                message: `The branche ${entity.indexedInformations.codeBranche} is not accepted in data`,
+                data: entity
+            };
         }
 
         if (!isSiret(entity.indexedInformations.siret)) {
@@ -35,25 +41,25 @@ export class ChorusService implements VersementsProvider {
         }
 
         if (isNaN(entity.indexedInformations.amount)) {
-            return { success: false, message: `Amount is not a number`, data: entity }
+            return { success: false, message: `Amount is not a number`, data: entity };
         }
 
         if (!(entity.indexedInformations.dateOperation instanceof Date)) {
-            return { success: false, message: `Operation date is not a valid date`, data: entity }
+            return { success: false, message: `Operation date is not a valid date`, data: entity };
         }
 
         if (!isEJ(entity.indexedInformations.ej)) {
             return { success: false, message: `INVALID EJ FOR ${entity.indexedInformations.ej}`, data: entity };
         }
 
-        return { success: true }
+        return { success: true };
     }
 
     /**
      * @param entities /!\ entites must be validated upstream
      */
     public async insertBatchChorusLine(entities: ChorusLineEntity[], dropedDb = false) {
-        const acceptedEntities = await asyncFilter(entities, async (entity) => {
+        const acceptedEntities = await asyncFilter(entities, async entity => {
             if (entity.indexedInformations.codeBranche === ASSO_BRANCHE) return true;
             const siren = siretToSiren(entity.indexedInformations.siret);
 
@@ -72,7 +78,7 @@ export class ChorusService implements VersementsProvider {
         return {
             rejected: entities.length - acceptedEntities.length,
             created: acceptedEntities.length
-        }
+        };
     }
 
     public async switchChorusRepo() {
@@ -84,34 +90,37 @@ export class ChorusService implements VersementsProvider {
             return {
                 state: "rejected",
                 result: this.validateEntity(entity)
-            }
+            };
         }
 
         const alreadyExist = await chorusLineRepository.findOneByUniqueId(entity.uniqueId);
         if (alreadyExist) {
             return {
                 state: "updated",
-                result: await chorusLineRepository.update(entity),
-            }
+                result: await chorusLineRepository.update(entity)
+            };
         }
 
         // Check if siret belongs to an asso
-        if (entity.indexedInformations.codeBranche !== ASSO_BRANCHE && !(await this.sirenBelongAsso(siretToSiren(entity.indexedInformations.siret)))) {
+        if (
+            entity.indexedInformations.codeBranche !== ASSO_BRANCHE &&
+            !(await this.sirenBelongAsso(siretToSiren(entity.indexedInformations.siret)))
+        ) {
             return {
                 state: "rejected",
                 result: {
                     message: "The Siret does not correspond to an association",
-                    data: entity,
+                    data: entity
                 }
-            }
+            };
         }
 
         try {
             await chorusLineRepository.create(entity);
             return {
                 state: "created",
-                result: entity,
-            }
+                result: entity
+            };
         } catch (e) {
             return {
                 state: "rejected",
@@ -119,7 +128,7 @@ export class ChorusService implements VersementsProvider {
                     message: "Fail to create ChorusLineEntity",
                     data: entity
                 }
-            }
+            };
         }
     }
 
@@ -130,7 +139,7 @@ export class ChorusService implements VersementsProvider {
         const chorusLine = await chorusLineRepository.findOneBySiren(siren);
         if (chorusLine) return true;
 
-        return false
+        return false;
     }
 
     /**

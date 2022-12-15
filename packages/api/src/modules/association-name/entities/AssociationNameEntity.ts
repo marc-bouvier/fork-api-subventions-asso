@@ -1,4 +1,4 @@
-import { Rna, Siren } from "@api-subventions-asso/dto";
+import { Rna, Siren } from "dto";
 
 export default class AssociationNameEntity {
     constructor(
@@ -7,5 +7,5 @@ export default class AssociationNameEntity {
         public provider: string,
         public lastUpdate: Date,
         public siren: Siren | null = null
-    ) { }
+    ) {}
 }

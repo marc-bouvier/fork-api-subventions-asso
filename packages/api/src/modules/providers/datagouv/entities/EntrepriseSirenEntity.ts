@@ -1,7 +1,5 @@
-import { Siren } from "@api-subventions-asso/dto";
+import { Siren } from "dto";
 
 export default class EntrepriseSirenEntity {
-    constructor(
-        public _id: Siren,
-    ) {}
+    constructor(public _id: Siren) {}
 }

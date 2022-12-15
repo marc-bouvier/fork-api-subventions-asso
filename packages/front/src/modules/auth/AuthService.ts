@@ -5,7 +5,7 @@ import {
     ResetPasswordErrorCodes,
     SignupDtoNegativeResponse,
     SignupErrorCodes
-} from "@api-subventions-asso/dto";
+} from "dto";
 import axios, { AxiosError } from "axios";
 import apiDatasubService from "../../shared/apiDatasub.service";
 

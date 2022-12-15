@@ -1,9 +1,5 @@
-import {
-    StatsRequestDtoResponse,
-    StatsRequestsMedianDtoResponse,
-    MonthlyAvgRequestDtoResponse
-} from "@api-subventions-asso/dto";
-import { ErrorResponse } from "@api-subventions-asso/dto/shared/ResponseStatus";
+import { StatsRequestDtoResponse, StatsRequestsMedianDtoResponse, MonthlyAvgRequestDtoResponse } from "dto";
+import { ErrorResponse } from "dto/shared/ResponseStatus";
 import { Controller, Get, Query, Route, Security, Tags, Response } from "tsoa";
 import statsService from "../../stats.service";
 

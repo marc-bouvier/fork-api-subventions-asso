@@ -1,42 +1,42 @@
-import request from "supertest"
+import request from "supertest";
 import userService, { UserService } from "../../../../../src/modules/user/user.service";
-import { ResetPasswordErrorCodes } from "@api-subventions-asso/dto";
+import { ResetPasswordErrorCodes } from "dto";
 import db from "../../../../../src/shared/MongoConnection";
 
-const g = global as unknown as { app: unknown }
+const g = global as unknown as { app: unknown };
 
-describe('AuthentificationController, /auth', () => {
-
+describe("AuthentificationController, /auth", () => {
     describe("POST /forget-password", () => {
         beforeEach(async () => {
             await userService.createUser("user@beta.gouv.fr");
-        })
+        });
         it("should return 200", async () => {
             const response = await request(g.app)
                 .post("/auth/forget-password")
                 .send({
-                    email: "user@beta.gouv.fr",
+                    email: "user@beta.gouv.fr"
                 })
-                .set('Accept', 'application/json');
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(200);
-            expect(response.body).toMatchObject({ success: true, reset: expect.objectContaining({ userId: expect.any(String) }) })
-        })
+            expect(response.body).toMatchObject({
+                success: true,
+                reset: expect.objectContaining({ userId: expect.any(String) })
+            });
+        });
 
         it("should add reject because user not found", async () => {
-
             const response = await request(g.app)
                 .post("/auth/forget-password")
                 .send({
-                    email: "useraa@beta.gouv.fr",
+                    email: "useraa@beta.gouv.fr"
                 })
-                .set('Accept', 'application/json')
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(500);
-            expect(response.body).toMatchObject({ success: false, message: "User not found" })
-        })
-
-    })
+            expect(response.body).toMatchObject({ success: false, message: "User not found" });
+        });
+    });
 
     describe("POST /reset-password", () => {
         it("should return 200", async () => {
@@ -51,10 +51,13 @@ describe('AuthentificationController, /auth', () => {
                     password: "AAAAaaaaa;;;;2222",
                     token: result.reset.token
                 })
-                .set('Accept', 'application/json');
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(200);
-            expect(response.body).toMatchObject({ success: true, data: { user: { email: "test-reset@beta.gouv.fr", active: true } } })
+            expect(response.body).toMatchObject({
+                success: true,
+                data: { user: { email: "test-reset@beta.gouv.fr", active: true } }
+            });
         });
 
         it("should reject because password is not hard", async () => {
@@ -69,24 +72,29 @@ describe('AuthentificationController, /auth', () => {
                     password: "AAAAaaa",
                     token: result.reset.token
                 })
-                .set('Accept', 'application/json');
+                .set("Accept", "application/json");
             expect(response.statusCode).toBe(500);
-            expect(response.body).toMatchObject({ success: false, data: { code: ResetPasswordErrorCodes.PASSWORD_FORMAT_INVALID } })
-        })
+            expect(response.body).toMatchObject({
+                success: false,
+                data: { code: ResetPasswordErrorCodes.PASSWORD_FORMAT_INVALID }
+            });
+        });
 
         it("should reject because wrong token", async () => {
-
             const response = await request(g.app)
                 .post("/auth/reset-password")
                 .send({
                     password: "AAAAaaaaa;;;;2222",
                     token: "sdsdsdsd"
                 })
-                .set('Accept', 'application/json')
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(500);
-            expect(response.body).toMatchObject({ success: false, data: { code: ResetPasswordErrorCodes.RESET_TOKEN_NOT_FOUND } })
-        })
+            expect(response.body).toMatchObject({
+                success: false,
+                data: { code: ResetPasswordErrorCodes.RESET_TOKEN_NOT_FOUND }
+            });
+        });
 
         it("should reject because token is outdated", async () => {
             await userService.createUser("test-reset@beta.gouv.fr");
@@ -103,13 +111,16 @@ describe('AuthentificationController, /auth', () => {
                     password: "AAAAaaaaa;;;;2222",
                     token: result.reset.token
                 })
-                .set('Accept', 'application/json')
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(500);
-            expect(response.body).toMatchObject({ success: false, data: { code: ResetPasswordErrorCodes.RESET_TOKEN_EXPIRED } });
+            expect(response.body).toMatchObject({
+                success: false,
+                data: { code: ResetPasswordErrorCodes.RESET_TOKEN_EXPIRED }
+            });
 
             UserService.RESET_TIMEOUT = oldResetTimout;
-        })
+        });
 
         it("should reject because user is deleted", async () => {
             await userService.createUser("test-reset@beta.gouv.fr");
@@ -125,16 +136,19 @@ describe('AuthentificationController, /auth', () => {
                     password: "AAAAaaaaa;;;;2222",
                     token: result.reset.token
                 })
-                .set('Accept', 'application/json')
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(500);
-            expect(response.body).toMatchObject({ success: false, data: { code: ResetPasswordErrorCodes.USER_NOT_FOUND } });
-        })
-    })
+            expect(response.body).toMatchObject({
+                success: false,
+                data: { code: ResetPasswordErrorCodes.USER_NOT_FOUND }
+            });
+        });
+    });
 
     describe("POST /login", () => {
         it("should log user", async () => {
-            const EMAIL = "test-login@beta.gouv.fr"
+            const EMAIL = "test-login@beta.gouv.fr";
             await userService.createUser(EMAIL);
             await userService.activeUser(EMAIL);
 
@@ -144,7 +158,7 @@ describe('AuthentificationController, /auth', () => {
                     password: "TMP_PASSWOrd;12345678",
                     email: "test-login@beta.gouv.fr"
                 })
-                .set('Accept', 'application/json');
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(201);
             expect(response.body).toMatchObject({
@@ -158,11 +172,11 @@ describe('AuthentificationController, /auth', () => {
                         expirateDate: expect.any(String)
                     }
                 }
-            })
+            });
         });
 
         it("should not return password", async () => {
-            const EMAIL = "test-login@beta.gouv.fr"
+            const EMAIL = "test-login@beta.gouv.fr";
             await userService.createUser(EMAIL);
             await userService.activeUser(EMAIL);
 
@@ -172,7 +186,7 @@ describe('AuthentificationController, /auth', () => {
                     password: "TMP_PASSWOrd;12345678",
                     email: "test-login@beta.gouv.fr"
                 })
-                .set('Accept', 'application/json');
+                .set("Accept", "application/json");
             const expected = undefined;
             const actual = response.body.data.hashPassword;
             expect(actual).toEqual(expected);
@@ -188,7 +202,7 @@ describe('AuthentificationController, /auth', () => {
                     password: "WRONG PASS",
                     email: "test-login@beta.gouv.fr"
                 })
-                .set('Accept', 'application/json');
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(401);
         });
@@ -202,10 +216,9 @@ describe('AuthentificationController, /auth', () => {
                     password: "TMP_PASSWOrd;12345678",
                     email: "test-login@beta.gouv.fr"
                 })
-                .set('Accept', 'application/json');
+                .set("Accept", "application/json");
 
             expect(response.statusCode).toBe(401);
         });
-    })
+    });
 });
-

@@ -1,7 +1,13 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { GetAssociationResponseDto, LoginDtoResponse, ResetPasswordDtoResponse, SignupDtoResponse, EtablissementDtoResponse } from "@api-subventions-asso/dto";
+import {
+    GetAssociationResponseDto,
+    LoginDtoResponse,
+    ResetPasswordDtoResponse,
+    SignupDtoResponse,
+    EtablissementDtoResponse
+} from "dto";
 import { DATASUB_URL } from "./config";
-import UserDto, { UserWithJWTDto } from "@api-subventions-asso/dto/user/UserDto";
+import UserDto, { UserWithJWTDto } from "dto/user/UserDto";
 
 export class APIDatasubService {
     login(email: string, password: string) {
@@ -61,7 +67,12 @@ export class APIDatasubService {
         };
     }
 
-    private async sendRequest<T>(method: "POST" | "GET" | "PUT" | "DELETE", uri: string, user?: UserWithJWTDto, body?: unknown) {
+    private async sendRequest<T>(
+        method: "POST" | "GET" | "PUT" | "DELETE",
+        uri: string,
+        user?: UserWithJWTDto,
+        body?: unknown
+    ) {
         let response: AxiosResponse<T, any>;
         const url = `${DATASUB_URL}${uri}`;
         try {

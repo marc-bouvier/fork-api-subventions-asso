@@ -1,4 +1,4 @@
-import { UserWithJWTDto } from "@api-subventions-asso/dto";
+import { UserWithJWTDto } from "dto";
 import apiDatasubService from "../../shared/apiDatasub.service";
 
 export class AdminService {

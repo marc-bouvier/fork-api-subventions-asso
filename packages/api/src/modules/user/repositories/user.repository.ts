@@ -1,4 +1,4 @@
-import UserDto from "@api-subventions-asso/dto/user/UserDto";
+import UserDto from "dto/user/UserDto";
 import { Filter, ObjectId } from "mongodb";
 import db from "../../../shared/MongoConnection";
 import User from "../entities/UserNotPersisted";
@@ -40,7 +40,7 @@ export class UserRepository {
     }
 
     async create(user: User) {
-        const userDbo = { ...user, _id: new ObjectId() }
+        const userDbo = { ...user, _id: new ObjectId() };
         const result = await this.collection.insertOne(userDbo);
         return this.removeSecrets({ ...user, _id: result.insertedId });
     }
@@ -58,7 +58,7 @@ export class UserRepository {
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { hashPassword, jwt, ...userWithoutSecret } = user;
-        return userWithoutSecret
+        return userWithoutSecret;
     }
 }
 

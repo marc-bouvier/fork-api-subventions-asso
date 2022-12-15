@@ -2,7 +2,7 @@ import { RoleEnum } from "../../../@enums/Roles";
 import { DefaultObject } from "../../../@types";
 import db from "../../../shared/MongoConnection";
 import { englishMonthNames } from "../../../shared/helpers/DateHelper";
-import { NbRequestsPerMonthRequest } from "@api-subventions-asso/dto";
+import { NbRequestsPerMonthRequest } from "dto";
 
 export class StatsRepository {
     private readonly collection = db.collection("log");

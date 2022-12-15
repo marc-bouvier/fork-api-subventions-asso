@@ -1,4 +1,4 @@
-import { IEtablissement, Siret, DemandeSubvention, ProviderValue, UserWithJWTDto } from "@api-subventions-asso/dto";
+import { IEtablissement, Siret, DemandeSubvention, ProviderValue, UserWithJWTDto } from "dto";
 import { DefaultObject } from "../../@types/utils";
 import apiDatasubService from "../../shared/apiDatasub.service";
 import IdentifierHelper from "../../shared/helpers/IdentifierHelper";

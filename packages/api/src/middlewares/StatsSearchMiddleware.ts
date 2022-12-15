@@ -1,4 +1,4 @@
-import UserDto from "@api-subventions-asso/dto/user/UserDto";
+import UserDto from "dto/user/UserDto";
 import { NextFunction, Response, Request } from "express";
 import userService from "../modules/user/user.service";
 
@@ -17,4 +17,4 @@ export const StatsSearchRoutesRegex = [
     new RegExp("/association/[Ww0-9]{9,10}$"),
     new RegExp("/etablissement"),
     new RegExp("/search")
-]
+];

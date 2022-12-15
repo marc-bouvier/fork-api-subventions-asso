@@ -1,5 +1,5 @@
-import { CreateUserDtoSuccess, UserDtoSuccessResponse, UserListDtoSuccess } from "@api-subventions-asso/dto";
-import UserDto, { UserWithResetTokenDto } from "@api-subventions-asso/dto/user/UserDto";
+import { CreateUserDtoSuccess, UserDtoSuccessResponse, UserListDtoSuccess } from "dto";
+import UserDto, { UserWithResetTokenDto } from "dto/user/UserDto";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";

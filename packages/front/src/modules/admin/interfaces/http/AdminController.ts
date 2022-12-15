@@ -1,5 +1,5 @@
 import path from "path";
-import UserDto from "@api-subventions-asso/dto/user/UserDto";
+import UserDto from "dto/user/UserDto";
 import { NextFunction, Request, Response } from "express";
 import { DefaultObject } from "../../../../@types/utils";
 import Controller from "../../../../decorators/controller.decorator";

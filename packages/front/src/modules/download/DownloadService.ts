@@ -1,4 +1,4 @@
-import { Siret, UserWithJWTDto } from "@api-subventions-asso/dto";
+import { Siret, UserWithJWTDto } from "dto";
 import apiDatasubService from "../../shared/apiDatasub.service";
 import IdentifierHelper from "../../shared/helpers/IdentifierHelper";
 

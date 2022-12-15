@@ -1,4 +1,4 @@
-import { ProviderValues, ProviderValue } from "@api-subventions-asso/dto";
+import { ProviderValues, ProviderValue } from "dto";
 
 export default class ProviderValueHelper {
     static isProviderValue(value: unknown): value is ProviderValue<unknown> {
