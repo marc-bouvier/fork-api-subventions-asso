@@ -39,7 +39,6 @@
         "url": "https://github.com/betagouv/datasubvention/issues"
     },
     "dependencies": {
-        "@api-subventions-asso/dto": "../dto",
         "@gouvfr/dsfr": "*",
         "@hotwired/stimulus": "^3.0.1",
         "@hotwired/stimulus-webpack-helpers": "^1.0.1",
@@ -63,6 +62,7 @@
         "winston-mongodb": "^5.0.7"
     },
     "devDependencies": {
+        "dto": "*",
         "@babel/core": "^7.20.2",
         "@babel/plugin-transform-modules-commonjs": "^7.19.6",
         "@types/express": "^4.17.13",
