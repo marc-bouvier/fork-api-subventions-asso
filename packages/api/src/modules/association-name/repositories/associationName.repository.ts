@@ -55,10 +55,6 @@ export class AssociationNameRepository {
         );
     }
 
-    async create(entity: AssociationNameEntity) {
-        return this.collection.insertOne(Object.assign({}, entity)); // Clone entity to avoid mutating the entity;
-    }
-
     async upsert(entity: AssociationNameEntity) {
         return this.collection.updateOne(
             {

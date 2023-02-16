@@ -13,7 +13,7 @@ export class AssociationNameService {
         EventManager.add("association-name.matching");
 
         EventManager.on("association-name.matching", {}, async (cbStop, data) => {
-            await this.add(data as IAssociationName);
+            await this.upsert(data as IAssociationName);
             cbStop(); // HOTFIX permet d'attendre que le add soit fait avant d'envoyer un add
         });
     }
@@ -98,12 +98,6 @@ export class AssociationNameService {
         const uniqueMapsValues = new Set(flattenMapsValues);
 
         return [...uniqueMapsValues].map(this._getMostRecentEntity);
-    }
-
-    async add(entity: AssociationNameEntity) {
-        if (await associationNameRepository.findOneByEntity(entity)) return; // TODO: UPDATE DATE ?
-
-        return await associationNameRepository.create(entity);
     }
 
     async upsert(entity: AssociationNameEntity) {
