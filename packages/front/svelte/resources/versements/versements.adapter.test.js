@@ -16,9 +16,9 @@ describe("Versements Adapter", () => {
     ];
 
     describe("toVersement()", () => {
-        const mockCountTotalVersement = jest.spyOn(VersementsAdapter, "_countTotalVersement");
+        const mockGetTotalPayment = jest.spyOn(VersementsAdapter, "_getTotalPayment");
 
-        const mocks = [mockCountTotalVersement];
+        const mocks = [mockGetTotalPayment];
 
         beforeAll(() => mocks.forEach(mock => mock.mockImplementation(jest.fn())));
         afterEach(() => mocks.forEach(mock => mock.mockClear()));
@@ -34,14 +34,14 @@ describe("Versements Adapter", () => {
             expect(subventionVersementHelper.getLastVersementsDate).toHaveBeenCalledTimes(1);
         });
 
-        it("should call _countTotalVersement()", () => {
+        it("should call _getTotalPayment()", () => {
             VersementsAdapter.toVersement(VERSEMENTS);
-            expect(mockCountTotalVersement).toHaveBeenCalledTimes(1);
+            expect(mockGetTotalPayment).toHaveBeenCalledTimes(1);
         });
 
-        it("should call valueOrHyphen() twice", () => {
+        it("should call valueOrHyphen() 3 times", () => {
             VersementsAdapter.toVersement(VERSEMENTS);
-            expect(dataHelper.valueOrHyphen).toHaveBeenCalledTimes(2);
+            expect(dataHelper.valueOrHyphen).toHaveBeenCalledTimes(3);
         });
 
         it("should call withTwoYearDigit() ", () => {
@@ -60,6 +60,24 @@ describe("Versements Adapter", () => {
         it("return sum of versements", () => {
             const expected = 100;
             const actual = VersementsAdapter._countTotalVersement(VERSEMENTS);
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("_getTotalPayment", () => {
+        const spyCountTotalVersement = jest.spyOn(VersementsAdapter, "_countTotalVersement");
+        it("should call _countTotalVersement()", () => {
+            VersementsAdapter._getTotalPayment(VERSEMENTS);
+            expect(spyCountTotalVersement).toHaveBeenCalledTimes(1);
+        });
+
+        it.each`
+            value
+            ${[]}
+            ${undefined}
+        `("should return undefined", ({ value }) => {
+            const expected = undefined;
+            const actual = VersementsAdapter._getTotalPayment(value);
             expect(actual).toEqual(expected);
         });
     });
