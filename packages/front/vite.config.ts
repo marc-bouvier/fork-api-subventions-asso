@@ -10,17 +10,23 @@ const pkg = JSON.parse(json);
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
+
+    console.log("👉👉👉👉👉👉 ", env.PUBLIC_ENV);
     return {
         plugins: [
-            sentrySvelteKit({
-                sourceMapsUploadOptions: {
-                    org: "betagouv",
-                    project: "data-subvention-front",
-                    url: "https://sentry.incubateur.net/",
-                    authToken: env.SENTRY_AUTH_TOKEN || env.SENTRY_AUTH_TOKEN,
-                    release: pkg.version
-                },
-            }),
+            ...(env.PUBLIC_ENV !== "dev" && env.PUBLIC_ENV !== "test"
+                ? [
+                      sentrySvelteKit({
+                          sourceMapsUploadOptions: {
+                              org: "betagouv",
+                              project: "data-subvention-front",
+                              url: "https://sentry.incubateur.net/",
+                              authToken: env.SENTRY_AUTH_TOKEN || env.SENTRY_AUTH_TOKEN,
+                              release: pkg.version,
+                          },
+                      }),
+                  ]
+                : []),
             sveltekit(),
         ],
         test: {
