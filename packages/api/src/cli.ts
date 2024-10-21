@@ -55,7 +55,13 @@ async function main() {
     ];
 
     const args = process.argv.slice(2);
-
+    if (args.length === 0 || args[0] === "help") {
+        console.info(
+            "Available commands : ",
+            controllers.map(it => it.cmdName),
+        );
+        process.exit(0);
+    }
     const Controller = controllers.find(controller => controller.cmdName === args[0]);
 
     if (!Controller) {

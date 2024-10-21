@@ -11,7 +11,6 @@ const pkg = JSON.parse(json);
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
 
-    console.log("👉👉👉👉👉👉 ", env.PUBLIC_ENV);
     return {
         plugins: [
             ...(env.PUBLIC_ENV !== "dev" && env.PUBLIC_ENV !== "test"
